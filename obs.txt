@@ -34,3 +34,6 @@ npx react-native
 
 yarn add react-native-vector-icons
 
+yarn add @types/react-native-vector-icons -D
+
+
