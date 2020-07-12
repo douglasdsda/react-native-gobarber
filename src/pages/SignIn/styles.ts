@@ -13,3 +13,17 @@ export const Title = styled.Text`
   font-family: 'Roboto-Medium';
   margin: 64px 0 24px;
 `;
+
+export const ForgotPassword = styled.TouchableOpacity`
+  margin-top: 24px;
+`;
+
+export const ForgotPasswordText = styled.Text`
+  color: #f4ede8;
+  font-size: 16px;
+  font-family: 'Roboto-Regular';
+`;
+
+export const CreateAccountButton = styled.TouchableOpacity``;
+
+export const CreateAccountButtonText = styled.Text``;
