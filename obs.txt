@@ -16,3 +16,21 @@ yarn react-native android
 
 yarn add eslint@6.8.0 -D
 
+
+$ yarn add styled-components
+
+$ yarn add @types/styled-components -D
+
+yarn add @react-navigation/native
+
+yarn add react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view
+
+
+yarn add @react-navigation/stack
+
+configurar fonts
+yarn react-native link
+npx react-native
+
+yarn add react-native-vector-icons
+
