@@ -37,3 +37,6 @@ yarn add react-native-vector-icons
 yarn add @types/react-native-vector-icons -D
 
 yarn add react-native-iphone-x-helper
+
+
+chmod 755 android/gradlew j
