@@ -40,3 +40,6 @@ yarn add react-native-iphone-x-helper
 
 
 chmod 755 android/gradlew j
+
+yarn add @unform/core @unform/mobile
+yarn add @unform/core @unform/mobile
