@@ -41,5 +41,10 @@ yarn add react-native-iphone-x-helper
 
 chmod 755 android/gradlew j
 
+conseguir pegar valoes de form de maneira performatica
 yarn add @unform/core @unform/mobile
 yarn add @unform/core @unform/mobile
+
+validacao de formulario
+yarn add yup
+yarn add @types/yup
