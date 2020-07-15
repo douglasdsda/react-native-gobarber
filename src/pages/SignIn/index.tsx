@@ -14,6 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
+import { useAuth } from '../../hooks/auth';
 import logoImg from '../../assets/logo.png';
 
 import Button from '../../components/Button';
@@ -39,46 +40,51 @@ const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
-  const handleSignIn = useCallback(async (data: SignInFormData) => {
-    try {
-      formRef.current?.setErrors({});
+  const { signIn } = useAuth();
 
-      const schema = Yup.object().shape({
-        email: Yup.string()
-          .required('E-mail obrigatorio')
-          .email('Digite um e-mail válido'),
-        password: Yup.string().required('Senha obrigatoria'),
-      });
-      await schema.validate(data, {
-        abortEarly: false,
-      });
+  const handleSignIn = useCallback(
+    async (data: SignInFormData) => {
+      try {
+        formRef.current?.setErrors({});
 
-      // await signIn({
-      //   email: data.email,
-      //   password: data.password,
-      // });
+        const schema = Yup.object().shape({
+          email: Yup.string()
+            .required('E-mail obrigatorio')
+            .email('Digite um e-mail válido'),
+          password: Yup.string().required('Senha obrigatoria'),
+        });
+        await schema.validate(data, {
+          abortEarly: false,
+        });
 
-      // history.push('/dashbord');
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        const erros = getValidationErros(err);
+        await signIn({
+          email: data.email,
+          password: data.password,
+        });
 
-        formRef.current?.setErrors(erros);
+        // navigation.navigate('');
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const erros = getValidationErros(err);
+
+          formRef.current?.setErrors(erros);
+        }
+
+        // Alert.alert(
+        //   'Erro na autenticação',
+        //   'Ocorreu um erro ao fazer um login, cheque as credenciais.',
+        // );
+
+        // addToast({
+        //   type: 'error',
+        //   title: 'Erro na autenticação',
+        //   description:
+        //     'Ocorreu um erro ao fazer um login, cheque as credenciais.',
+        // });
       }
-
-      // Alert.alert(
-      //   'Erro na autenticação',
-      //   'Ocorreu um erro ao fazer um login, cheque as credenciais.',
-      // );
-
-      // addToast({
-      //   type: 'error',
-      //   title: 'Erro na autenticação',
-      //   description:
-      //     'Ocorreu um erro ao fazer um login, cheque as credenciais.',
-      // });
-    }
-  }, []);
+    },
+    [signIn],
+  );
 
   return (
     <>

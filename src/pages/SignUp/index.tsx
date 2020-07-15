@@ -6,6 +6,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   TextInput,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
@@ -18,6 +19,7 @@ import logoImg from '../../assets/logo.png';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import api from '../../services/api';
 
 import { Container, Title, BackToSignUp, BackToSignUpText } from './styles';
 
@@ -34,47 +36,55 @@ const SignUp: React.FC = () => {
   const passwordInput = useRef<TextInput>(null);
   const formRef = useRef<FormHandles>(null);
 
-  const handlerOnSignUp = useCallback(async (data: SignUpFormData) => {
-    try {
-      formRef.current?.setErrors({});
+  const handlerOnSignUp = useCallback(
+    async (data: SignUpFormData) => {
+      try {
+        formRef.current?.setErrors({});
 
-      const schema = Yup.object().shape({
-        name: Yup.string().required('Nome obrigatorio'),
-        email: Yup.string()
-          .required('E-mail obrigatorio')
-          .email('Digite um e-mail válido'),
-        password: Yup.string()
-          .required('Senha obrigatoria')
-          .min(6, 'No mínimo 6 dígitos'),
-      });
-      await schema.validate(data, {
-        abortEarly: false,
-      });
+        const schema = Yup.object().shape({
+          name: Yup.string().required('Nome obrigatorio'),
+          email: Yup.string()
+            .required('E-mail obrigatorio')
+            .email('Digite um e-mail válido'),
+          password: Yup.string()
+            .required('Senha obrigatoria')
+            .min(6, 'No mínimo 6 dígitos'),
+        });
+        await schema.validate(data, {
+          abortEarly: false,
+        });
 
-      // await api.post('/users', data);
+        await api.post('/users', data);
 
-      // history.push('/');
+        Alert.alert(
+          'Cadastro realizado!',
+          'Você já pode fazer seu logon no GoBarber!',
+        );
 
-      // addToast({
-      //   type: 'success',
-      //   title: 'Cadastro realizado!',
-      //   description: 'Você já pode fazer seu logon no GoBarber!',
-      // });
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        const erros = getValidationErros(err);
+        navigation.goBack();
 
-        formRef.current?.setErrors(erros);
+        // addToast({
+        //   type: 'success',
+        //   title: 'Cadastro realizado!',
+        //   description: 'Você já pode fazer seu logon no GoBarber!',
+        // });
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const erros = getValidationErros(err);
 
-        // return;
+          formRef.current?.setErrors(erros);
+
+          // return;
+        }
+        // addToast({
+        //   type: 'error',
+        //   title: 'Erro no Cadastro',
+        //   description: 'Ocorreu um erro ao fazer um Cadastro, tente novamente',
+        // });
       }
-      // addToast({
-      //   type: 'error',
-      //   title: 'Erro no Cadastro',
-      //   description: 'Ocorreu um erro ao fazer um Cadastro, tente novamente',
-      // });
-    }
-  }, []);
+    },
+    [navigation],
+  );
 
   return (
     <>
@@ -95,7 +105,7 @@ const SignUp: React.FC = () => {
             <Form ref={formRef} onSubmit={handlerOnSignUp}>
               <Input
                 autoCapitalize="words"
-                name="user"
+                name="name"
                 icon="user"
                 placeholder="Nome"
                 returnKeyType="next"
@@ -108,7 +118,7 @@ const SignUp: React.FC = () => {
                 keyboardType="email-address"
                 autoCorrect={false}
                 autoCapitalize="none"
-                name="mail"
+                name="email"
                 icon="mail"
                 placeholder="E-mail"
                 returnKeyType="next"

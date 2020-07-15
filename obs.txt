@@ -48,3 +48,8 @@ yarn add @unform/core @unform/mobile
 validacao de formulario
 yarn add yup
 yarn add @types/yup
+
+yarn add axios
+
+storage do react native
+yarn add @react-native-community/async-storage
