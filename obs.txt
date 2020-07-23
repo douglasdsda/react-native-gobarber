@@ -53,3 +53,9 @@ yarn add axios
 
 storage do react native
 yarn add @react-native-community/async-storage
+
+
+--docker iniciar
+
+systemctl start docker
+service docker start
