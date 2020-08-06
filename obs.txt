@@ -59,3 +59,12 @@ yarn add @react-native-community/async-storage
 
 systemctl start docker
 service docker start
+
+yarn add @react-native-community/datetimepicker
+
+debbugger para react native
+fbfippper.com
+
+yarn add date-fns
+
+
