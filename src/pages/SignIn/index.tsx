@@ -70,10 +70,10 @@ const SignIn: React.FC = () => {
           formRef.current?.setErrors(erros);
         }
 
-        // Alert.alert(
-        //   'Erro na autenticação',
-        //   'Ocorreu um erro ao fazer um login, cheque as credenciais.',
-        // );
+        Alert.alert(
+          'Erro na autenticação',
+          'Ocorreu um erro ao fazer um login, cheque as credenciais.',
+        );
 
         // addToast({
         //   type: 'error',
