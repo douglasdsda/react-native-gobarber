@@ -131,13 +131,9 @@ const CreateAppointment: React.FC = () => {
       date.setHours(selectedHour);
       date.setMinutes(0);
       date.setMilliseconds(0);
-      console.log({
-        providerId: selectedProvider,
-        date,
-      });
 
       await api.post('appointments', {
-        providerId: selectedProvider,
+        provider_id: selectedProvider,
         date: date.toString(),
       });
       navigate('AppointmentCreated', { date: date.getTime() });
@@ -271,9 +267,9 @@ const CreateAppointment: React.FC = () => {
             <CreatedAppointmentButtonText>Agendar</CreatedAppointmentButtonText>
           </CreatedAppointmentButton>
 
-          <Button type="button" onPress={handleGoCreadAppoint}>
+          {/* <Button type="button" onPress={handleGoCreadAppoint}>
             go
-          </Button>
+          </Button> */}
         </Schedule>
       </Content>
     </Container>
