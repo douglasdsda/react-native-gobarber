@@ -32,7 +32,6 @@ import {
   CreatedAppointmentButton,
   CreatedAppointmentButtonText,
 } from './styles';
-import Button from '../../components/Button';
 
 interface RouteParams {
   providerId: string;
@@ -119,10 +118,6 @@ const CreateAppointment: React.FC = () => {
 
   const handleSelectHour = useCallback((hour: number) => {
     setSelectedHour(hour);
-  }, []);
-
-  const handleGoCreadAppoint = useCallback((hour: number) => {
-    navigate('AppointmentCreated', { date: new Date().getTime() });
   }, []);
 
   const handleCreateAppoint = useCallback(async () => {
@@ -266,10 +261,6 @@ const CreateAppointment: React.FC = () => {
           <CreatedAppointmentButton onPress={handleCreateAppoint}>
             <CreatedAppointmentButtonText>Agendar</CreatedAppointmentButtonText>
           </CreatedAppointmentButton>
-
-          {/* <Button type="button" onPress={handleGoCreadAppoint}>
-            go
-          </Button> */}
         </Schedule>
       </Content>
     </Container>

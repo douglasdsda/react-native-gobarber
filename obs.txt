@@ -67,4 +67,6 @@ fbfippper.com
 
 yarn add date-fns
 
+yarn add react-native-image-picker
+
 

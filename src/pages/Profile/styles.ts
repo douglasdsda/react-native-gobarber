@@ -22,6 +22,11 @@ export const BackButton = styled.TouchableOpacity`
   align-self: flex-start;
 `;
 
+export const BackLogout = styled.TouchableOpacity`
+  margin-top: 20px;
+  align-self: flex-end;
+`;
+
 export const UserAvatarButton = styled.TouchableOpacity``;
 export const UserAvatar = styled.Image`
   width: 186px;

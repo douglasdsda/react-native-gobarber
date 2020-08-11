@@ -11,6 +11,8 @@ import {
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 
+import ImagePicker from 'react-native-image-picker';
+
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
@@ -27,6 +29,7 @@ import {
   UserAvatarButton,
   UserAvatar,
   BackButton,
+  BackLogout,
 } from './styles';
 
 interface ProfileFormData {
@@ -39,7 +42,7 @@ interface ProfileFormData {
 
 const Profile: React.FC = () => {
   const navigation = useNavigation();
-  const { user, updateUser } = useAuth();
+  const { user, updateUser, signOut } = useAuth();
 
   const emailInput = useRef<TextInput>(null);
   const passwordInput = useRef<TextInput>(null);
@@ -134,6 +137,46 @@ const Profile: React.FC = () => {
     navigation.goBack();
   }, [navigation]);
 
+  const handleUpdateAvatar = useCallback(() => {
+    ImagePicker.showImagePicker(
+      {
+        title: 'Selecione um avatar',
+        cancelButtonTitle: 'Cancelar',
+        takePhotoButtonTitle: 'Usar câmera',
+        chooseFromLibraryButtonTitle: 'Escolhe da galeria',
+        chooseWhichLibraryTitle: 'Escolhe da galeria',
+      },
+      response => {
+        if (response.didCancel) {
+          return;
+        }
+
+        if (response.error) {
+          Alert.alert('Erro ao atualizar seu avatar.');
+          return;
+        }
+
+        if (response.customButton) {
+          console.log('user tappe', response.customButton);
+        }
+
+        const source = { uri: response.uri };
+
+        const data = new FormData();
+
+        data.append('avatar', {
+          type: 'image/jpeg',
+          name: `${user.id}.jpg`,
+          uri: response.uri,
+        });
+
+        api.patch('users/avatar', data).then(res => {
+          updateUser(res.data);
+        });
+      },
+    );
+  }, [updateUser, user.id]);
+
   return (
     <>
       <KeyboardAvoidingView
@@ -149,7 +192,10 @@ const Profile: React.FC = () => {
             <BackButton onPress={handleSigUp}>
               <Icon name="chevron-left" size={24} color="#999591" />
             </BackButton>
-            <UserAvatarButton>
+            <BackLogout onPress={signOut}>
+              <Icon name="chevron-right" size={24} color="#999591" />
+            </BackLogout>
+            <UserAvatarButton onPress={handleUpdateAvatar}>
               <UserAvatar source={{ uri: user.avatar_url }} />
             </UserAvatarButton>
 
